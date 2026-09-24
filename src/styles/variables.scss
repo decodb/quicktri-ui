@@ -1,0 +1,40 @@
+// ==========================================================================
+// Brand colours
+// ==========================================================================
+$color-mint:       rgb(61, 218, 190);
+$color-black:       rgb(18, 17, 23);
+$color-pink:        rgb(255, 122, 172);
+$color-yellow:       rgb(255, 224, 61);
+$color-white:        rgb(255, 255, 255);
+
+// ==========================================================================
+// Semantic aliases — use these in components, not the raw names above
+// ==========================================================================
+$color-bg:              $color-white;
+$color-border:           $color-black;   // button/card borders
+$color-text-primary:      $color-black;
+
+$color-action-primary:    $color-mint;    // main CTAs — Log in, Create account
+$color-action-secondary:   $color-pink;    // secondary actions — Reset password
+$color-action-tertiary:     $color-yellow;  // warning / time-critical actions
+
+// ==========================================================================
+// Neutrals — supporting greys used alongside the brand palette
+// ==========================================================================
+$color-text-secondary:    #5a5a63;  // body copy on white
+$color-text-muted:        #8a8a92;  // helper text, placeholders
+$color-text-faint:        #b0b0b8;  // fallback links, footnotes
+
+$color-input-border:      #d8d8dc;  // form field borders
+$color-divider:           #ececef;  // hairline dividers
+
+// ==========================================================================
+// Tints — soft/muted backgrounds for badges & alert blocks
+// ==========================================================================
+$color-mint-tint:       #E9FBF6;  // success / confirmation backgrounds
+$color-pink-tint:        #FFF0F6;  // warning / security-alert backgrounds
+$color-yellow-tint:       #FFF6CC;  // expiry / time-limit backgrounds
+
+// Text-on-tint pairs (keep contrast readable on the soft backgrounds above)
+$color-pink-tint-text:     #8a3a56;
+$color-yellow-tint-text:    #7a6b00;

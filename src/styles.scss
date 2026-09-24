@@ -1,1 +1,79 @@
 /* You can add global styles to this file, and also import other style files */
+@use '../src/styles/index' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: $color-black;
+  background-color: $color-bg;
+}
+
+a {
+  text-decoration: none;
+  color: $color-black;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1 {
+  font-size: 2.75rem;
+  line-height: 1.2;
+
+  @include sm {
+    font-size: 1.5rem;
+  }
+}
+
+h2 {
+  font-size: 2.25rem;
+  line-height: 1.25;
+
+  @include sm {
+    font-size: 1.5rem;
+  }
+}
+
+h3 {
+  font-size: 1.75rem;
+  line-height: 1.3;
+
+  @include sm {
+    font-size: 1.25rem;
+  }
+}
+
+h4 {
+  font-size: 1.375rem;
+  line-height: 1.35;
+}
+
+h5 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+h6 {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+small {
+  font-size: 0.875rem;
+}
