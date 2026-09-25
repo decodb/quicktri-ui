@@ -1,3 +1,49 @@
+@if (statusCode() === 200) {
+    <div class="backdrop">
+        <div class="alert alert--success">
+            <div class="alert__icon">
+                <i class="ti ti-check"></i>
+            </div>
+            <div class="alert__body">
+                <p class="alert__title">Account created</p>
+                <p class="alert__message">Check your email to verify your account before logging in.</p>
+            </div>
+        </div>
+    </div>
+}
+
+@if (statusCode() === 429) {
+    <div class="backdrop">
+        <div class="alert alert--warning">
+            <div class="alert__icon">
+                <i class="ti ti-clock"></i>
+            </div>
+            <div class="alert__body">
+                <p class="alert__title">Too many attempts</p>
+                <p class="alert__message">You've tried too many times. Please wait before trying again.</p>
+                <span class="alert__badge">Retry in 2 minutes</span>
+            </div>
+        </div>
+    </div>
+}
+
+@if (statusCode() === 500) {
+    <div class="backdrop">
+        <div class="alert alert--danger">
+            <div class="alert__icon">
+                <i class="ti ti-alert-triangle"></i>
+            </div>
+            <div class="alert__body">
+                <p class="alert__title">Something went wrong</p>
+                <p class="alert__message">We couldn't create your account. This is on us — please try again.</p>
+                <button class="alert__action">
+                <i class="ti ti-refresh"></i> Try again
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
 <section>
     <div class="section__1">
         <div class="logo"><h4>Q</h4></div>
@@ -45,6 +91,10 @@
             @if (hasError('email', 'email')) {
                 <p class="error">Please enter a valid email</p>
             }
+
+            @if (statusCode() === 409) {
+                <p class="error">Email already in use. Please try with another email. </p>
+            }
         </div>
         <div class="field">
             <label for="password">Password</label>
@@ -71,26 +121,39 @@
         <div class="field">
             <label for="password">Confirm Password</label>
             <div class="input">
-                <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password" formControlName="password">
+                <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password" formControlName="confirmPassword">
                 @if(showPassword()) {
                     <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
                 } @else {
                     <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
                 }
             </div>
-            @if (hasError('password', 'required')) {
+            @if (hasError('confirmPassword', 'required')) {
                 <p class="error">Password is required <p>
             }
 
-            @if (hasError('password', 'minlength')) {
+            @if (hasError('confirmPassword', 'minlength')) {
                 <p class="error">Password is required to have a minimum of 2 characters<p>
             }
 
-            @if (hasError('password', 'pattern')) {
+            @if (hasError('confirmPassword', 'pattern')) {
                 <p class="error">Password must contain uppercase, lowercase, number & special character <p>
             }  
         </div>
-        <button class="btn">Create account</button>
+        <button
+            class="btn btn--primary"
+            [class.btn--loading]="isLoading()"
+            [disabled]="isLoading()"
+            (click)="onSubmit()"
+            >
+            @if (isLoading()) {
+                <svg class="btn__spinner" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" fill="none" stroke-width="3" class="btn__spinner-track" />
+                    <path d="M21 12a9 9 0 0 0-9-9" fill="none" stroke-width="3" stroke-linecap="round" class="btn__spinner-head" />
+                </svg>
+            }
+            <span>{{ isLoading() ? 'Creating account...' : 'Create account' }}</span>
+        </button>
         <p class="log__in">Already have an account? <a routerLink="/sign-in">Log in</a></p>
     </form>
 </section>

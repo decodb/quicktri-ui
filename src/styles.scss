@@ -122,15 +122,64 @@ input {
 }
 
 .btn {
-  padding: 0.85rem 1rem;
-  border: 2px solid $color-border;
+  width: 100%;
+  height: 44px;
   border-radius: 10px;
-  border-radius: 10px;
+  border: 2px solid $color-black;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
   cursor: pointer;
-  font-family: inherit;
+  transition: opacity 0.15s ease;
+
+  &--primary {
+    background: $color-action-primary; // mint
+  }
+
+  &--loading,
+  &:disabled {
+    opacity: 0.85;
+    cursor: not-allowed;
+  }
+}
+
+.btn__spinner {
+  width: 16px;
+  height: 16px;
+  animation: btn-spin 0.7s linear infinite;
+
+  &-track {
+    stroke: rgba($color-black, 0.25);
+  }
+
+  &-head {
+    stroke: $color-black;
+  }
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .error {
   color: $color-input-border-error;
   font-size: 0.75rem;
+}
+
+.backdrop {
+  background: rgba(0, 0, 0, 0.4); 
+  backdrop-filter: blur(6px); 
+  -webkit-backdrop-filter: blur(6px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
 }

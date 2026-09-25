@@ -1,5 +1,6 @@
 @use '../../../../../styles/index.scss' as *;
 
+// main
 section {
     margin: 1.5rem auto;
     width: 100%;
@@ -78,4 +79,107 @@ section {
             font-weight: 600;
         }
     }
+}
+
+// dialogs
+.alert {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1.5px solid;
+
+  margin: 0 auto;
+  width: 80%;
+  max-width: 35rem;
+  z-index: 1000;
+  position: fixed;
+  top: 2rem;
+  left: 10rem;
+  right: 10rem;
+
+  &__icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-black;
+  }
+
+  &__body {
+    flex: 1;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  &__message {
+    margin: 2px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  &__badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: $color-black;
+    background: rgba($color-black, 0.06);
+  }
+
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 5px 12px;
+    background: $color-white;
+    border: 1.5px solid $color-black;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    color: $color-black;
+    cursor: pointer;
+
+    &:hover {
+      background: $color-input-border;
+    }
+  }
+
+  // 200
+  &--success {
+    background: $color-mint-tint;
+    border-color: $color-mint;
+    .alert__icon { background: $color-mint; }
+    .alert__title { color: #04342C; }
+    .alert__message { color: #085041; }
+  }
+
+  // 429
+  &--warning {
+    background: $color-yellow-tint;
+    border-color: $color-yellow;
+    .alert__icon { background: $color-yellow; }
+    .alert__title { color: #412402; }
+    .alert__message { color: $color-yellow-tint-text; }
+  }
+
+  // 500
+  &--danger {
+    background: $color-pink-tint;
+    border-color: $color-pink;
+    .alert__icon { background: $color-pink; }
+    .alert__title { color: #4B1528; }
+    .alert__message { color: $color-pink-tint-text; }
+  }
 }
