@@ -1,1 +1,32 @@
-<p>sign-in works!</p>
+<section>
+    <div class="section__1">
+        <div class="logo"><h4>Q</h4></div>
+        <h4>Quicktri</h4>
+    </div>
+    <div class="section__2">
+        <h3>Welcome back</h3>
+        <p>Log in to join your next quiz.</p>
+    </div>
+    <form [formGroup]="signinForm">
+         <div class="field">
+            <label for="email">Email <span>*</span></label>
+            <div class="input">
+                <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com" formControlName="email">
+            </div>
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <div class="input">
+                <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password" formControlName="password">
+                @if(showPassword()) {
+                    <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
+                } @else {
+                    <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
+                }
+            </div>           
+        </div>
+        <button class="btn">Log in</button>
+        <p class="log__in">New to Quicktri? <a>Create an account</a></p>
+    </form>
+</section>
+

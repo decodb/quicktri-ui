@@ -1,0 +1,81 @@
+@use '../../../../../styles/index.scss' as *;
+
+section {
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 35rem;
+    border: 2px solid $color-border;
+    border-radius: 10px;
+    padding: 2rem;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @include sm {
+        border: none;
+        margin: 0.5rem auto;
+    }
+
+    .section__1 {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        .logo {
+            background-color: $color-action-primary;
+            border: 2px solid $color-border;
+            border-radius: 5px;
+            padding: 0.25rem 0.5rem;
+
+            h4 {
+                font-weight: 700;
+            }
+        }
+
+        h4 {
+            font-weight: 500;
+        }
+    }
+
+    .section__2 {
+        h3 {
+            font-weight: 500;
+        }
+
+        p {
+            color: $color-text-muted;
+            font-size: 0.9rem;
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            @include sm {
+                flex-direction: column;
+            }
+        }
+    }
+
+    .btn {
+        background-color: $color-action-primary;
+    }
+
+    .log__in {
+        text-align: center;
+        font-size: 0.85rem;
+        color: $color-text-muted;
+
+        a {
+            font-weight: 600;
+        }
+    }
+}

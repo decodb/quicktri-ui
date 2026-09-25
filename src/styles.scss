@@ -77,3 +77,60 @@ p {
 small {
   font-size: 0.875rem;
 }
+
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  
+  width: 100%;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  span {
+    color: $color-action-secondary;
+  }
+}
+
+input {
+  background-color: $color-white;
+  color: $color-text-secondary;
+  border: none;
+  width: 90%;
+
+  &:focus {
+    outline: none;
+    box-shadow: none; 
+  }
+}
+
+.input {
+  background-color: $color-white;
+  padding: 0.85rem 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  border: 1px solid $color-text-muted;
+  border-radius: 10px;
+}
+
+.btn {
+  padding: 0.85rem 1rem;
+  border: 2px solid $color-border;
+  border-radius: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.error {
+  color: $color-input-border-error;
+  font-size: 0.75rem;
+}

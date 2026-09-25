@@ -1,1 +1,96 @@
-<p>sign-up works!</p>
+<section>
+    <div class="section__1">
+        <div class="logo"><h4>Q</h4></div>
+        <h4>Quicktri</h4>
+    </div>
+    <div class="section__2">
+        <h3>Create your account</h3>
+        <p>Join live quizzes and climb the leaderboard.</p>
+    </div>
+    <form [formGroup]="signupForm">
+        <div class="row">
+            <div class="field">
+                <label for="first_name">First name <span>*</span></label>
+                <div class="input">
+                    <input id="last_name" type="text" placeholder="eg. Boitumelo" formControlName="firstName">
+                </div>
+                @if (hasError('firstName', 'required')) {
+                    <p class="error">First name is required</p>
+                }
+                @if (hasError('firstName', 'minlength')) {
+                    <p class="error">First name should have 3 minimum characters</p>
+                }
+            </div>
+            <div class="field">
+                <label for="first_name">Last name <span>*</span></label>
+                <div class="input">
+                    <input id="first_name" type="text" placeholder="eg. Mkhwanazi" formControlName="lastName">
+                </div>
+                @if (hasError('lastName', 'required')) {
+                    <p class="error">Last name is required</p>
+                }
+                @if (hasError('lastName', 'minlength')) {
+                    <p class="error">Last name should have 3 minimum characters</p>
+                }
+            </div>
+        </div>
+         <div class="field">
+            <label for="email">Email <span>*</span></label>
+            <div class="input">
+                <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com" formControlName="email">
+            </div>
+            @if (hasError('email', 'required')) {
+                <p class="error">An email is required</p>
+            }
+            @if (hasError('email', 'email')) {
+                <p class="error">Please enter a valid email</p>
+            }
+        </div>
+        <div class="field">
+            <label for="password">Password</label>
+            <div class="input">
+                <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password" formControlName="password">
+                @if(showPassword()) {
+                    <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
+                } @else {
+                    <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
+                }
+            </div>
+             @if (hasError('password', 'required')) {
+                <p class="error">Password is required <p>
+            }
+
+            @if (hasError('password', 'minlength')) {
+                <p class="error">Password is required to have a minimum of 2 characters<p>
+            }
+
+            @if (hasError('password', 'pattern')) {
+                <p class="error">Password must contain uppercase, lowercase, number & special character <p>
+            }           
+        </div>
+        <div class="field">
+            <label for="password">Confirm Password</label>
+            <div class="input">
+                <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password" formControlName="password">
+                @if(showPassword()) {
+                    <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
+                } @else {
+                    <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
+                }
+            </div>
+            @if (hasError('password', 'required')) {
+                <p class="error">Password is required <p>
+            }
+
+            @if (hasError('password', 'minlength')) {
+                <p class="error">Password is required to have a minimum of 2 characters<p>
+            }
+
+            @if (hasError('password', 'pattern')) {
+                <p class="error">Password must contain uppercase, lowercase, number & special character <p>
+            }  
+        </div>
+        <button class="btn">Create account</button>
+        <p class="log__in">Already have an account? <a routerLink="/sign-in">Log in</a></p>
+    </form>
+</section>
