@@ -1,1 +1,67 @@
-<p>verify-email works!</p>
+<div class="verify-page">
+  <div class="verify-card">
+
+    @switch (state) {
+
+      <!-- Loading -->
+      @case ('loading') {
+        <svg class="verify-card__spinner" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" fill="none" stroke="#ececef" stroke-width="3" />
+          <path d="M21 12a9 9 0 0 0-9-9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+        </svg>
+        <p class="verify-card__title">Verifying your email...</p>
+        <p class="verify-card__message">This will only take a moment.</p>
+      }
+
+      <!-- Success -->
+      @case ('success') {
+        <div class="verify-card__icon verify-card__icon--success">
+          <i class="ti ti-check"></i>
+        </div>
+        <p class="verify-card__title">Email verified!</p>
+        <p class="verify-card__message">Your account is active. You can now log in.</p>
+        <button class="verify-card__action verify-card__action--success" (click)="goToLogin()">
+          Continue to log in
+        </button>
+      }
+
+      <!-- Expired -->
+      @case ('expired') {
+        <div class="verify-card__icon verify-card__icon--danger">
+          <i class="ti ti-link-off"></i>
+        </div>
+        <p class="verify-card__title">This link has expired</p>
+        <p class="verify-card__message">Verification links are valid for 24 hours. Request a new one below.</p>
+        <button class="verify-card__action verify-card__action--danger">
+          Resend verification email
+        </button>
+      }
+
+      <!-- Already verified -->
+      @case ('already-verified') {
+        <div class="verify-card__icon verify-card__icon--warning">
+          <i class="ti ti-info-circle"></i>
+        </div>
+        <p class="verify-card__title">Already verified</p>
+        <p class="verify-card__message">This account has already been verified. You're good to go.</p>
+        <button class="verify-card__action verify-card__action--warning" (click)="goToLogin()">
+          Continue to log in
+        </button>
+      }
+
+      <!-- Error -->
+      @case ('error') {
+        <div class="verify-card__icon verify-card__icon--danger">
+          <i class="ti ti-server-off"></i>
+        </div>
+        <p class="verify-card__title">Something went wrong</p>
+        <p class="verify-card__message">We couldn't verify your email right now. Please try again.</p>
+        <button class="verify-card__action verify-card__action--danger">
+          <i class="ti ti-refresh"></i> Try again
+        </button>
+      }
+
+    }
+
+  </div>
+</div>
