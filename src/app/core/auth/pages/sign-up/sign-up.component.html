@@ -1,45 +1,50 @@
 @if (statusCode() === 200) {
     <div class="backdrop">
-        <div class="alert alert--success">
-            <div class="alert__icon">
-                <i class="ti ti-check"></i>
+        <div class="response-card response-card--success">
+            <div class="response-card__content">
+                <div class="response-card__icon"><i class="ti ti-check"></i></div>
+                <div>
+                <p class="response-card__title">Account created</p>
+                <p class="response-card__message">Check your email to verify your account before logging in.</p>
+                </div>
             </div>
-            <div class="alert__body">
-                <p class="alert__title">Account created</p>
-                <p class="alert__message">Check your email to verify your account before logging in.</p>
-            </div>
+            <button class="response-card__action response-card__action--success">
+                Continue to log in
+            </button>
         </div>
     </div>
 }
 
 @if (statusCode() === 429) {
     <div class="backdrop">
-        <div class="alert alert--warning">
-            <div class="alert__icon">
-                <i class="ti ti-clock"></i>
+        <div class="response-card response-card--warning">
+            <div class="response-card__content">
+                <div class="response-card__icon"><i class="ti ti-clock"></i></div>
+                <div>
+                <p class="response-card__title">Too many attempts</p>
+                <p class="response-card__message">You've tried too many times. Please wait before trying again.</p>
+                </div>
             </div>
-            <div class="alert__body">
-                <p class="alert__title">Too many attempts</p>
-                <p class="alert__message">You've tried too many times. Please wait before trying again.</p>
-                <span class="alert__badge">Retry in 2 minutes</span>
-            </div>
+            <button class="response-card__action response-card__action--disabled" disabled>
+                <i class="ti ti-lock"></i> Try again in 20 seconds
+            </button>
         </div>
     </div>
 }
 
 @if (statusCode() === 500) {
     <div class="backdrop">
-        <div class="alert alert--danger">
-            <div class="alert__icon">
-                <i class="ti ti-alert-triangle"></i>
+        <div class="response-card response-card--danger">
+            <div class="response-card__content">
+                <div class="response-card__icon"><i class="ti ti-alert-triangle"></i></div>
+                <div>
+                <p class="response-card__title">Something went wrong</p>
+                <p class="response-card__message">We couldn't create your account. This is on us — please try again.</p>
+                </div>
             </div>
-            <div class="alert__body">
-                <p class="alert__title">Something went wrong</p>
-                <p class="alert__message">We couldn't create your account. This is on us — please try again.</p>
-                <button class="alert__action">
+            <button class="response-card__action response-card__action--danger">
                 <i class="ti ti-refresh"></i> Try again
-                </button>
-            </div>
+            </button>
         </div>
     </div>
 }
@@ -58,7 +63,7 @@
             <div class="field">
                 <label for="first_name">First name <span>*</span></label>
                 <div class="input">
-                    <input id="last_name" type="text" placeholder="eg. Boitumelo" formControlName="firstName">
+                    <input id="first_name" type="text" placeholder="eg. Boitumelo" formControlName="firstName">
                 </div>
                 @if (hasError('firstName', 'required')) {
                     <p class="error">First name is required</p>
@@ -70,7 +75,7 @@
             <div class="field">
                 <label for="first_name">Last name <span>*</span></label>
                 <div class="input">
-                    <input id="first_name" type="text" placeholder="eg. Mkhwanazi" formControlName="lastName">
+                    <input id="last_name" type="text" placeholder="eg. Mkhwanazi" formControlName="lastName">
                 </div>
                 @if (hasError('lastName', 'required')) {
                     <p class="error">Last name is required</p>
