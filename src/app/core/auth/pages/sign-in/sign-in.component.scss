@@ -64,6 +64,15 @@ section {
                 flex-direction: column;
             }
         }
+
+        .field {
+
+            a {
+                text-align: right;
+                font-size: 0.8rem;
+                color: $color-pink;
+            }
+        }
     }
 
     .btn {

@@ -42,7 +42,7 @@ export class VerifyEmailComponent implements OnInit {
       error: (err: HttpErrorResponse) => {
         const code = err?.error?.code;
 
-        if (err.status === 410 || code === 'TOKEN_EXPIRED') {
+        if (err.status === 400 || code === 'TOKEN_EXPIRED') {
           this.state = 'expired';
         } else if (err.status === 409 || code === 'ALREADY_VERIFIED') {
           this.state = 'already-verified';

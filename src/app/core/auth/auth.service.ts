@@ -17,7 +17,10 @@ export class AuthService {
 
     // verify email
     verifyEmail(token: string): Observable<{ message: string }> {
-        return this.http.get<{ message: string }>(`${environment.apiUrl}/auth/verify-email?${token}`);
+        return this.http.get<{ message: string }>(
+            `${environment.apiUrl}/auth/verify-email`,
+            { params: { token } }
+        );
     }
 
     // forgot password
