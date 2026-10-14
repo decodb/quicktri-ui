@@ -9,3 +9,8 @@ export interface SignUpDto {
 export interface ForgotPasswordDto {
     email: string,
 }
+
+export interface ResetPasswordDto {
+    token: string,
+    password: string,
+}

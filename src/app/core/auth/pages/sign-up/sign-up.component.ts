@@ -1,6 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { SignUpDto } from '../../auth.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,6 +16,8 @@ export class SignUpComponent {
   showPassword = signal<boolean>(false);
   isLoading = signal<boolean>(false);
   statusCode = signal<200 | 409 |  429 | 500 | null>(null);
+  
+  private router = inject(Router)
 
   signupForm = new FormGroup({
     firstName:       new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
@@ -90,5 +92,9 @@ export class SignUpComponent {
         }
       })
   }
+
+    goToLogin(): void {
+      this.router.navigate(['/login']);
+    }
 
 }

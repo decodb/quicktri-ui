@@ -8,7 +8,7 @@
                 <p class="response-card__message">Check your email to verify your account before logging in.</p>
                 </div>
             </div>
-            <button class="response-card__action response-card__action--success">
+            <button class="response-card__action response-card__action--success" (click)="goToLogin()">
                 Continue to log in
             </button>
         </div>
@@ -21,8 +21,8 @@
             <div class="response-card__content">
                 <div class="response-card__icon"><i class="ti ti-clock"></i></div>
                 <div>
-                <p class="response-card__title">Too many attempts</p>
-                <p class="response-card__message">You've tried too many times. Please wait before trying again.</p>
+                    <p class="response-card__title">Too many attempts</p>
+                    <p class="response-card__message">You've tried too many times. Please wait before trying again.</p>
                 </div>
             </div>
             <button class="response-card__action response-card__action--disabled" disabled>

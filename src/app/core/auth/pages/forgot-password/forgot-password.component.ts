@@ -63,7 +63,7 @@ export class ForgotPasswordComponent implements OnDestroy {
   }
 
   goToLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/sign-up']);
   }
 
   private startCountdown(seconds: number): void {

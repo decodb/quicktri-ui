@@ -54,6 +54,6 @@ export class VerifyEmailComponent implements OnInit {
   }
 
   goToLogin(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/sign-up']);
   }
 }

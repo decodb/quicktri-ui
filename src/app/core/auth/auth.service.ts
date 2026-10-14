@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { ForgotPasswordDto, SignUpDto } from "./auth.model";
+import { ForgotPasswordDto, ResetPasswordDto, SignUpDto } from "./auth.model";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
@@ -28,5 +28,8 @@ export class AuthService {
         return this.http.post<{ message: string }>(`${environment.apiUrl}/auth/forgot-password`, dto);
     }
 
-    //
+    // reset password
+    resetPassword(dto: ResetPasswordDto): Observable<{ message: string }> {
+        return this.http.post<{ message: string }>(`${environment.apiUrl}/auth/reset-password`, dto);
+    }
 }
