@@ -3,31 +3,137 @@
         <div class="logo"><h4>Q</h4></div>
         <h4>Quicktri</h4>
     </div>
+
     <div class="section__2">
         <h3>Welcome back</h3>
         <p>Log in to join your next quiz.</p>
     </div>
-    <form [formGroup]="signinForm">
-         <div class="field">
+
+    @switch (state()) {
+        @case ('invalid-credentials') {
+            <!-- 401 -->
+            <div class="response response--danger" role="alert">
+                <div class="response__icon"><ion-icon name="close-outline"></ion-icon></div>
+                <div class="response__body">
+                    <h3 class="response__title">Incorrect email or password</h3>
+                    <p class="response__message">Check your details and try again.</p>
+                </div>
+            </div>
+        }
+        @case ('unverified') {
+            <!-- 403 EMAIL_NOT_VERIFIED -->
+            <div class="response response--warning" role="alert">
+                <div class="response__icon"><ion-icon name="mail-outline"></ion-icon></div>
+                <div class="response__body">
+                    <h3 class="response__title">Verify your email first</h3>
+                    <p class="response__message">We sent a verification link when you signed up. Check your inbox, or request a new one.</p>
+                    <button
+                        type="button"
+                        class="response__action"
+                        (click)="resendVerification()"
+                        [disabled]="resendState() !== 'idle'"
+                    >
+                        @switch (resendState()) {
+                            @case ('sending') { <span>Sending...</span> }
+                            @case ('sent') {
+                                <ion-icon name="checkmark-outline"></ion-icon>
+                                <span>Email sent</span>
+                            }
+                            @default { <span>Resend verification email</span> }
+                        }
+                    </button>
+                </div>
+            </div>
+        }
+        @case ('rate-limited') {
+            <!-- 429 -->
+            <div class="response response--warning" role="alert">
+                <div class="response__icon"><ion-icon name="time-outline"></ion-icon></div>
+                <div class="response__body">
+                    <h3 class="response__title">Too many attempts</h3>
+                    <p class="response__message">You've tried too many times. Please wait before trying again.</p>
+                </div>
+            </div>
+        }
+        @case ('error') {
+            <!-- 500 / network -->
+            <div class="response response--danger" role="alert">
+                <div class="response__icon"><ion-icon name="warning-outline"></ion-icon></div>
+                <div class="response__body">
+                    <h3 class="response__title">Something went wrong</h3>
+                    <p class="response__message">We couldn't log you in. This is on us, please try again.</p>
+                </div>
+            </div>
+        }
+    }
+
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="field">
             <label for="email">Email <span>*</span></label>
             <div class="input">
-                <input id="email" type="email" placeholder="eg. b_mkwanazi@icloud.com" formControlName="email">
+                <input id="email" type="email" autocomplete="email" placeholder="eg. b_mkwanazi@icloud.com" formControlName="email">
             </div>
+            @if (hasError('email', 'required')) {
+                <p class="error">An email is required</p>
+            }
+            @if (hasError('email', 'email')) {
+                <p class="error">Please enter a valid email</p>
+            }
         </div>
+
         <div class="field">
-            <label for="password">Password</label>
+            <label for="password">Password <span>*</span></label>
             <div class="input">
-                <input id="password" [type]="showPassword() ? 'text' : 'password'" placeholder="Enter your password" formControlName="password">
-                @if(showPassword()) {
-                    <ion-icon name="eye-outline" (click)="togglePassword()"></ion-icon>
-                } @else {
-                    <ion-icon name="eye-off-outline" (click)="togglePassword()"></ion-icon>
-                }
-            </div>   
-            <a routerLink="/forgot-password">Forgot password?</a>        
+                <input
+                    id="password"
+                    [type]="showPassword() ? 'text' : 'password'"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    formControlName="password"
+                >
+                <button
+                    type="button"
+                    class="toggle"
+                    (click)="togglePassword()"
+                    [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
+                >
+                    <ion-icon [name]="showPassword() ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+                </button>
+            </div>
+            @if (hasError('password', 'required')) {
+                <p class="error">A password is required</p>
+            }
+            <a routerLink="/forgot-password">Forgot password?</a>
         </div>
-        <button class="btn">Log in</button>
-        <p class="log__in">New to Quicktri? <a>Create an account</a></p>
+
+        <button
+            type="submit"
+            class="btn"
+            [class.btn--locked]="state() === 'rate-limited'"
+            [disabled]="state() === 'loading' || state() === 'rate-limited'"
+        >
+            @switch (state()) {
+                @case ('loading') {
+                    <svg class="spinner" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle class="spinner__track" cx="12" cy="12" r="9" fill="none" stroke-width="3" />
+                        <path class="spinner__head" d="M21 12a9 9 0 0 0-9-9" fill="none" stroke-width="3" stroke-linecap="round" />
+                    </svg>
+                    <span>Logging in...</span>
+                }
+                @case ('rate-limited') {
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <span>Try again in {{ countdownLabel() }}</span>
+                }
+                @case ('error') {
+                    <ion-icon name="refresh-outline"></ion-icon>
+                    <span>Try again</span>
+                }
+                @default {
+                    <span>Log in</span>
+                }
+            }
+        </button>
+
+        <p class="log__in">New to Quicktri? <a routerLink="/sign-up">Create an account</a></p>
     </form>
 </section>
-

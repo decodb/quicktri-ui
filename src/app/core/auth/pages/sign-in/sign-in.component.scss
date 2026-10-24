@@ -1,21 +1,41 @@
 @use '../../../../../styles/index.scss' as *;
 
 section {
-    margin: 7.5rem auto;
+    box-sizing: border-box;
+    margin: clamp(2rem, 10vh, 7.5rem) auto;
     width: 100%;
     max-width: 35rem;
     border: 2px solid $color-border;
     border-radius: 10px;
-    padding: 2rem;
-    
+    padding: clamp(1.25rem, 5vw, 2rem);
+
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 
+    // Phones: drop the card, let the page itself be the container
     @include sm {
-        height: 100vh;
-        margin: 5rem auto;
+        min-height: 100dvh;
+        margin: 0 auto;
+        padding-top: max(3rem, env(safe-area-inset-top));
+        padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+        padding-left: max(1.25rem, env(safe-area-inset-left));
+        padding-right: max(1.25rem, env(safe-area-inset-right));
         border: none;
+        border-radius: 0;
+    }
+
+    // Very small phones
+    @media (max-width: 22.5rem) {
+        gap: 1.25rem;
+
+        .section__2 h3 { font-size: 1.15rem; }
+    }
+
+    // Short landscape phones
+    @media (max-height: 30rem) and (orientation: landscape) {
+        padding-top: 1.25rem;
+        gap: 1rem;
     }
 
     .section__1 {
@@ -55,28 +75,77 @@ section {
         flex-direction: column;
         gap: 1rem;
 
-        .row {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-
-            @include sm {
-                flex-direction: column;
-            }
-        }
-
         .field {
-
+            // pink on white is too faint for small text (about 2.4:1 contrast),
+            // so the link uses the darker pink from the tint pair
             a {
+                display: block;
                 text-align: right;
                 font-size: 0.8rem;
-                color: $color-pink;
+                font-weight: 500;
+                color: $color-pink-tint-text;
+                padding: 0.35rem 0;
             }
         }
     }
 
+    // ---- Inputs -----------------------------------------------------------
+    .input {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        input {
+            flex: 1;
+            min-width: 0;
+            min-height: 2.75rem;          // 44px touch target
+            font-size: max(16px, 1rem);   // stops iOS Safari zooming in on focus
+        }
+
+        .toggle {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.75rem;
+            height: 2.75rem;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: $color-text-muted;
+            font-size: 1.25rem;
+            cursor: pointer;
+
+            &:hover,
+            &:focus-visible {
+                color: $color-black;
+            }
+        }
+    }
+
+    // ---- Buttons ----------------------------------------------------------
     .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 2.75rem;
         background-color: $color-action-primary;
+
+        &--locked,
+        &:disabled {
+            cursor: not-allowed;
+        }
+
+        &--locked {
+            background-color: $color-white;
+            border-color: $color-input-border;
+            color: $color-text-faint;
+        }
+
+        &:disabled:not(.btn--locked) {
+            opacity: 0.85;
+        }
     }
 
     .log__in {
@@ -85,7 +154,107 @@ section {
         color: $color-text-muted;
 
         a {
+            display: inline-block;
+            padding: 0.5rem 0.15rem; // bigger tap area without changing the look
             font-weight: 600;
+            color: $color-black;
         }
+    }
+
+    // ---- Response cards (401 / 403 / 429 / 500) ---------------------------
+    .response {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem;
+        border: 1.5px solid;
+        border-radius: 12px;
+
+        &__icon {
+            flex-shrink: 0;
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: $color-black;
+        }
+
+        &__body {
+            min-width: 0;
+        }
+
+        &__title {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        &__message {
+            margin: 0.15rem 0 0;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        &__action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            min-height: 2.25rem;
+            margin-top: 0.75rem;
+            padding: 0.35rem 0.85rem;
+            background: $color-white;
+            border: 1.5px solid $color-border;
+            border-radius: 7px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: $color-black;
+            cursor: pointer;
+
+            &:disabled {
+                cursor: not-allowed;
+                color: $color-text-muted;
+                border-color: $color-input-border;
+            }
+        }
+
+        &--warning {
+            background: $color-yellow-tint;
+            border-color: $color-action-tertiary;
+            .response__icon { background: $color-action-tertiary; }
+            .response__title { color: #412402; }
+            .response__message { color: $color-yellow-tint-text; }
+        }
+
+        &--danger {
+            background: $color-pink-tint;
+            border-color: $color-action-secondary;
+            .response__icon { background: $color-action-secondary; }
+            .response__title { color: #4b1528; }
+            .response__message { color: $color-pink-tint-text; }
+        }
+    }
+
+    // ---- Button spinner ---------------------------------------------------
+    .spinner {
+        width: 1rem;
+        height: 1rem;
+        animation: spin 0.7s linear infinite;
+
+        &__track { stroke: rgba($color-black, 0.25); }
+        &__head  { stroke: $color-black; }
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    section .spinner {
+        animation-duration: 2s;
     }
 }
