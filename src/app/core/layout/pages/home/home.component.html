@@ -1,0 +1,221 @@
+<header class="nav" [class.nav--scrolled]="scrolled()">
+    <div class="container nav__inner">
+        <a class="brand" routerLink="/" aria-label="Quicktri home">
+            <span class="brand__logo">Q</span>
+            <span class="brand__name">Quicktri</span>
+        </a>
+
+        <nav class="nav__links" aria-label="Primary">
+            @for (link of navLinks; track link.id) {
+                <a [href]="'#' + link.id" (click)="goTo($event, link.id)">{{ link.label }}</a>
+            }
+        </nav>
+
+        <div class="nav__actions">
+            <a class="button button--white" routerLink="/sign-in">Log in</a>
+            <a class="button button--mint" routerLink="/sign-up">Sign up</a>
+        </div>
+
+        <button
+            class="nav__toggle"
+            type="button"
+            (click)="toggleMenu()"
+            [attr.aria-expanded]="menuOpen()"
+            aria-controls="mobile-menu"
+            aria-label="Toggle menu"
+        >
+            <ion-icon [name]="menuOpen() ? 'close-outline' : 'menu-outline'"></ion-icon>
+        </button>
+    </div>
+
+    @if (menuOpen()) {
+        <div class="mobile" id="mobile-menu">
+            <div class="container mobile__inner">
+                @for (link of navLinks; track link.id) {
+                    <a [href]="'#' + link.id" (click)="goTo($event, link.id)">{{ link.label }}</a>
+                }
+                <div class="mobile__actions">
+                    <a class="button button--white" routerLink="/sign-in">Log in</a>
+                    <a class="button button--mint" routerLink="/sign-up">Sign up</a>
+                </div>
+            </div>
+        </div>
+    }
+</header>
+
+<main>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container hero__inner">
+            <div class="hero__copy">
+                <p class="pill"><ion-icon name="flash-outline"></ion-icon> Live, scheduled, ranked</p>
+                <h1>Quiz fast.<br><span class="hl">Rank</span> faster.</h1>
+                <p class="hero__lead">
+                    Quicktri is a live quiz platform where everyone races the same clock. Answer quicker,
+                    keep more points and fight for a spot on the podium.
+                </p>
+
+                <div class="hero__actions">
+                    <a class="button button--mint button--lg" routerLink="/sign-up">
+                        Get started <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </a>
+                    <a class="button button--white button--lg" href="#how" (click)="goTo($event, 'how')">See how it works</a>
+                </div>
+
+                <ul class="hero__facts">
+                    @for (fact of heroFacts; track fact) {
+                        <li><ion-icon name="checkmark-circle"></ion-icon> {{ fact }}</li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Decorative live-quiz demo -->
+            <div class="hero__visual" aria-hidden="true">
+                <div class="demo">
+                    <div class="demo__top">
+                        <span class="live"><i></i> Live now</span>
+                        <span class="demo__count">Question 3 of 10</span>
+                    </div>
+
+                    <h3 class="demo__question">Which planet is known as the Red Planet?</h3>
+
+                    <div class="demo__timer"><div class="demo__bar" [style.width.%]="barWidth()"></div></div>
+                    <div class="demo__meta">
+                        <span>{{ answered() ? 'Answer locked in' : secondsLeft() + 's left' }}</span>
+                        <span class="demo__points">+{{ points() }} pts</span>
+                    </div>
+
+                    <ul class="demo__options">
+                        @for (option of demoOptions; track option) {
+                            <li [class.is-picked]="answered() && option === correctOption">
+                                {{ option }}
+                                @if (answered() && option === correctOption) {
+                                    <ion-icon name="checkmark-circle"></ion-icon>
+                                }
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="demo__board">
+                        <p class="demo__board-title"><ion-icon name="trophy-outline"></ion-icon> Live leaderboard</p>
+                        @for (row of leaderboard; track row.rank) {
+                            <div class="demo__row">
+                                <span class="rank" [attr.data-rank]="row.rank">{{ row.rank }}</span>
+                                <span class="demo__name">{{ row.name }}</span>
+                                <span class="demo__score">{{ row.score }}</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section" id="how" aria-labelledby="how-title">
+        <div class="container">
+            <div class="section__head">
+                <p class="eyebrow">How it works</p>
+                <h2 id="how-title">From invite to podium in three steps</h2>
+            </div>
+
+            <div class="steps">
+                @for (step of steps; track step.number) {
+                    <article class="step" [attr.data-tone]="step.tone">
+                        <span class="step__number">{{ step.number }}</span>
+                        <h3>{{ step.title }}</h3>
+                        <p>{{ step.text }}</p>
+                    </article>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section section--tint" id="features" aria-labelledby="features-title">
+        <div class="container">
+            <div class="section__head">
+                <p class="eyebrow">Built for the race</p>
+                <h2 id="features-title">Everything a quiz night needs</h2>
+            </div>
+
+            <div class="features">
+                @for (feature of features; track feature.title) {
+                    <article class="feature">
+                        <span class="feature__icon" [attr.data-tone]="feature.tone">
+                            <ion-icon [name]="feature.icon"></ion-icon>
+                        </span>
+                        <h3>{{ feature.title }}</h3>
+                        <p>{{ feature.text }}</p>
+                    </article>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- Scoring + podium -->
+    <section class="section" id="podium" aria-labelledby="podium-title">
+        <div class="container podium-section">
+            <div class="podium-section__copy">
+                <p class="eyebrow">Leaderboard</p>
+                <h2 id="podium-title">Speed is the whole game</h2>
+                <p class="podium-section__lead">
+                    Every question carries base points. Get it right quickly and you keep most of them,
+                    hesitate and they drain away with the clock.
+                </p>
+                <ul class="checks">
+                    @for (point of scoringPoints; track point) {
+                        <li><ion-icon name="checkmark-circle"></ion-icon> {{ point }}</li>
+                    }
+                </ul>
+            </div>
+
+            <figure class="podium" aria-label="Example podium">
+                <div class="podium__cols">
+                    @for (player of podium; track player.rank) {
+                        <div class="podium__col" [attr.data-rank]="player.rank">
+                            @if (player.rank === 1) {
+                                <ion-icon class="podium__crown" name="trophy"></ion-icon>
+                            }
+                            <span class="podium__name">{{ player.name }}</span>
+                            <span class="podium__score">{{ player.score }} pts</span>
+                            <div class="podium__bar"><span>{{ player.rank }}</span></div>
+                        </div>
+                    }
+                </div>
+                <figcaption>Illustrative example</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Closing CTA -->
+    <section class="section section--cta">
+        <div class="container">
+            <div class="cta">
+                <h2>Your next quiz is closer than you think</h2>
+                <p>Create your account, verify your email and we'll tell you the moment a quiz is scheduled.</p>
+                <div class="cta__actions">
+                    <a class="button button--white button--lg" routerLink="/sign-up">Create your account</a>
+                    <a class="button button--yellow button--lg" routerLink="/sign-in">I already have one</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container footer__inner">
+        <a class="brand" routerLink="/" aria-label="Quicktri home">
+            <span class="brand__logo">Q</span>
+            <span class="brand__name">Quicktri</span>
+        </a>
+
+        <nav class="footer__links" aria-label="Footer">
+            <a routerLink="/sign-in">Log in</a>
+            <a routerLink="/sign-up">Sign up</a>
+            <a href="#how" (click)="goTo($event, 'how')">How it works</a>
+        </nav>
+
+        <p class="footer__note">&copy; {{ year }} Quicktri. Live quizzes, ranked in real time.</p>
+    </div>
+</footer>
